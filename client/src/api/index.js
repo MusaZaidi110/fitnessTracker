@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://fitnesstracker-backend.netlify.app/",
+  baseURL: "https://fitness-tracker-dun-kappa.vercel.app/",
 });
 
 export const UserSignUp = async (data) => API.post("/user/signup", data);
