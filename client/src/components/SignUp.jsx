@@ -5,6 +5,7 @@ import Button from "./Button";
 import { UserSignUp } from "../api";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../redux/reducers/userSlice";
+import { ToastContainer, toast, Slide } from 'react-toastify';
 
 const Container = styled.div`
   width: 100%;
@@ -34,7 +35,17 @@ const SignUp = () => {
 
   const validateInputs = () => {
     if (!name || !email || !password) {
-      alert("Please fill in all fields");
+      toast.warning('Please fill in all fields', {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+              transition: Slide,
+              });
       return false;
     }
     return true;
@@ -47,12 +58,32 @@ const SignUp = () => {
       await UserSignUp({ name, email, password })
         .then((res) => {
           dispatch(loginSuccess(res.data));
-          alert("Account Created Success");
+          toast.success('Account Created Success', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Slide,
+            });
           setLoading(false);
           setButtonDisabled(false);
         })
         .catch((err) => {
-          alert(err.response.data.message);
+          toast.warning(err.response.data.message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Slide,
+            });
           setLoading(false);
           setButtonDisabled(false);
         });
@@ -60,6 +91,7 @@ const SignUp = () => {
   };
   return (
     <Container>
+      <ToastContainer />
       <div>
         <Title>Create New Account 👋</Title>
         <Span>Please enter details to create a new account</Span>

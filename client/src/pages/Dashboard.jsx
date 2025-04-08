@@ -7,6 +7,8 @@ import CategoryChart from "../components/cards/CategoryChart";
 import AddWorkout from "../components/AddWorkout";
 import WorkoutCard from "../components/cards/WorkoutCard";
 import { addWorkout, getDashboardDetails, getWorkouts } from "../api";
+import { ToastContainer, toast, Slide } from 'react-toastify';
+
 
 const Container = styled.div`
   flex: 1;
@@ -79,7 +81,6 @@ const Dashboard = () => {
     const token = localStorage.getItem("fittrack-app-token");
     await getDashboardDetails(token).then((res) => {
       setData(res.data);
-      console.log(res.data);
       setLoading(false);
     });
   };
@@ -88,7 +89,6 @@ const Dashboard = () => {
     const token = localStorage.getItem("fittrack-app-token");
     await getWorkouts(token, "").then((res) => {
       setTodaysWorkouts(res?.data?.todaysWorkouts);
-      console.log(res.data);
       setLoading(false);
     });
   };
@@ -103,7 +103,17 @@ const Dashboard = () => {
         setButtonLoading(false);
       })
       .catch((err) => {
-        alert(err);
+        toast.warning(err.response.data.message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Slide,
+          });
       });
   };
 
@@ -113,6 +123,7 @@ const Dashboard = () => {
   }, []);
   return (
     <Container>
+      <ToastContainer />
       <Wrapper>
         <Title>Dashboard</Title>
         <FlexWrap>

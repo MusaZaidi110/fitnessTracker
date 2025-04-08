@@ -5,6 +5,7 @@ import Button from "./Button";
 import { UserSignIn } from "../api";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../redux/reducers/userSlice";
+import { ToastContainer, toast, Slide } from 'react-toastify';
 
 const Container = styled.div`
   width: 100%;
@@ -33,7 +34,17 @@ const SignIn = () => {
 
   const validateInputs = () => {
     if (!email || !password) {
-      alert("Please fill in all fields");
+      toast.warning('Please fill in all fields', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Slide,
+        });
       return false;
     }
     return true;
@@ -46,12 +57,32 @@ const SignIn = () => {
       await UserSignIn({ email, password })
         .then((res) => {
           dispatch(loginSuccess(res.data));
-          alert("Login Success");
+          toast.success('Login Success', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Slide,
+            });  
           setLoading(false);
           setButtonDisabled(false);
         })
         .catch((err) => {
-          alert(err.response.data.message);
+          toast.error(err.response.data.message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Slide,
+            });  
           setLoading(false);
           setButtonDisabled(false);
         });
@@ -60,6 +91,7 @@ const SignIn = () => {
 
   return (
     <Container>
+      <ToastContainer />
       <div>
         <Title>Welcome to Fittrack 👋</Title>
         <Span>Please login with your details here</Span>

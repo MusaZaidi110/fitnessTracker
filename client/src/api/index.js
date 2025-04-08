@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://fitness-tracker-dun-kappa.vercel.app/",
+  baseURL: "http://localhost:8080/api/",
 });
 
 export const UserSignUp = async (data) => API.post("/user/signup", data);
@@ -21,3 +21,15 @@ export const addWorkout = async (token, data) =>
   await API.post(`/user/workout`, data, {
     headers: { Authorization: `Bearer ${token}` },
   });
+
+// Third Party APIs
+
+var query = "1lb brisket with fries";
+const options = {
+  method: "GET",
+  url: `https://api.api-ninjas.com/v1/nutrition?query=${query}`,
+  headers: {
+    "x-rapidapi-key": "a4vvbiCuAI0zp9u82b1VVg==H1sGBTcBgKTByhWR",
+  },
+};
+export const getNutritionFromAPI = async () => await axios.get(options);

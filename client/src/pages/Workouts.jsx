@@ -83,7 +83,6 @@ const Workouts = () => {
     const token = localStorage.getItem("fittrack-app-token");
     await getWorkouts(token, date ? `?date=${date}` : "").then((res) => {
       setTodaysWorkouts(res?.data?.todaysWorkouts);
-      console.log(res.data);
       setLoading(false);
     });
   };
